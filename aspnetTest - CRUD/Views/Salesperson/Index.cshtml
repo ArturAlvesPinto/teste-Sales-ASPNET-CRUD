@@ -1,0 +1,31 @@
+@model List<aspnetapp.Models.SalesPerson>
+
+<h2>Sales People</h2>
+<div>
+    @Html.ActionLink("Create New Sales People","Create")
+</div>
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var salesPerson in Model)
+            {
+                <tr>
+                    <td>@salesPerson.Id</td>
+                    <td>@salesPerson.Name</td>                   
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@salesPerson.Id">Edit</a>
+                    </td>
+                    <td>
+                        <button type="submit" asp-action="DeleteSalesPerson" asp-route-id="@salesPerson.Id">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>    
+    </table>
+</form>

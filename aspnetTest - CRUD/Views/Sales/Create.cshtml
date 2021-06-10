@@ -1,0 +1,68 @@
+@model aspnetapp.Models.Sales
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@* Page Created New Sales (Item 2A - Check) *@
+
+<h1>Sales - Registry</h1>
+
+<h4>Information</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PostSales">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @* Input Customer Name *@
+            <div class="form-group">
+                <label asp-for="CustomerName" class="control-label">Customer Name</label>
+                <input asp-for="CustomerName" class="form-control" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+            
+            @* Select Sales Person *@
+            <div class="form-group">
+                <label asp-for="Salesperson" class="control-label"> Sales Person</label>
+
+                @* Usa-se o DropDow gerando uma lista a partir do SalesPerson *@
+                @Html.DropDownListFor(m => m.Salesperson,
+                ((IEnumerable<SalesPerson>)ViewBag.listName_).Select(option => new SelectListItem {
+                Text = option.Name,
+                Value = option.Name,
+                Selected = (Model != null) && (option.Name == Model.Salesperson)
+                }), "Choose an option...", new { @class = "form-control" })
+
+                <span asp-validation-for="Salesperson" class="text-danger"></span>
+            </div>
+
+            @* Input Price *@
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            @* Paid ? *@
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="hasPayment" /> @Html.DisplayNameFor(model =>
+                    model.hasPayment)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save Registry" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@* Validation fields - Só envia o form se os campos forem válido (Item 2B - Check)  *@
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

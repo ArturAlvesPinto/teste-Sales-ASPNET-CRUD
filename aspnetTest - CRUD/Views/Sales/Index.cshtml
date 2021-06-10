@@ -1,0 +1,44 @@
+@model List<aspnetapp.Models.Sales>
+
+<h2>Sales</h2>
+<div>
+    @Html.ActionLink("Create New Sales","Create")
+</div>
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Sales Person</th>
+                <th>Price</th>
+                <th>Payment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sales in Model)
+            {
+                <tr>
+                    <td>@sales.Id</td>
+                    <td>@sales.CustomerName</td>
+                    <td>@sales.Salesperson</td>
+                    <td>@sales.Price</td>
+                    @if (sales.hasPayment )
+                    {
+                        <td>Paid</td>
+                    }
+                    else 
+                    {
+                        <td>To be Paid</td>
+                    }
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@sales.Id">Edit</a>
+                    </td>
+                    <td>
+                        <button type="submit" asp-action="DeleteSales" asp-route-id="@sales.Id">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>    
+    </table>
+</form>
